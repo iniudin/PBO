@@ -1,5 +1,14 @@
 {
     "python.linting.pylintEnabled": false,
     "python.linting.mypyEnabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:PBO}/database.sqlite3",
+            "name": "pbo"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
 }

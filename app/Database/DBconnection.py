@@ -1,34 +1,32 @@
+# import mysql.connector
 import sqlite3
 
 
 class Database:
-    connection = sqlite3.connect("database.db")
-    cursor = connection.cursor()
+    connection = None
 
-    def __init__(self, query, value):
-        self.query = query
-        self.value = value
+    def __init__(self):
+        try:
+            if not self.connection:
+                self.connection = sqlite3.connect("database.sqlite3")
+            self.cursor = self.connection.cursor()
+        except Exception as error:
+            print(error)
 
-    def create_table(self):
-        self.cursor.execute(self.query)
-        self.connection.commit()
+    def __del__(self):
+        self.connection.close()
 
-    def insert(self):
-        self.cursor.executemany(self.query, self.value)
-        self.connection.commit()
+    def execute(self, query, value=None):
+        if value:
+            self.cursor.execute(query, value)
+        else:
+            self.cursor.execute(query)
 
-    def fetch_all(self) -> list:
-        result = self.cursor.execute(self.query)
-        return [i for i in result.fetchall()]
+    def execute_many(self, query, values=None):
+        if values:
+            self.cursor.executemany(query, values)
+        else:
+            self.cursor.executemany(query)
 
-    def fetch(self):
-        result = self.cursor.execute(self.query)
-        return result.fetchone()
-
-    def update(self):
-        self.cursor.execute(self.query, self.value)
-        self.connection.commit()
-
-    def delete(self):
-        self.cursor.execute(self.query, self.value)
+    def commit(self):
         self.connection.commit()
