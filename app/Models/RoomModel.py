@@ -1,8 +1,7 @@
 from app.Database.DBconnection import Database
-from humanfriendly.tables import format_pretty_table
 
 
-class Room(Database):
+class RoomModel(Database):
     def create_table(self):
         query = """
         CREATE TABLE IF NOT EXISTS rooms (

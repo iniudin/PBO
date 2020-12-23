@@ -10,5 +10,6 @@
             "name": "pbo"
         }
     ],
-    "sqltools.useNodeRuntime": true
+    "sqltools.useNodeRuntime": true,
+    "python.formatting.provider": "black"
 }
