@@ -39,7 +39,7 @@ def Register():
     MenuUtama()
 
 def Menu():
-    print("Dashboard: ")
+    print(("*"*20),"Dashboard: ",("*"*20))
     print("[1] MyBooking")
     print("[2] Rooms")
     print("[3] Bills")
@@ -57,39 +57,40 @@ def Menu():
     elif pilih.lower() == "4":
         Feedback()
     elif pilih.lower() == "5":
-        Me+nuUtama()
-    elif pilih.lower() == "6":
-        Exit()
+        MenuUtama()
     else:
         Exit()
 
 def MyBooking():
-    print("silahkan pilih kelas kamar yang Anda inginkan: ")
+    print("\nsilahkan pilih kelas kamar yang Anda inginkan: ")
     print("[1] Deluxe Rooms")
     print("[2] Premium Rooms")
+    print("[3] Kembali ")
 
     pilih1 = input("Masukkan pilihan Anda: ")
     if pilih1.lower() == "1":
         print("Anda memilih kelas kamar Deluxe Rooms")
         print("Silahkan pilih harga yang Anda inginkan: ")
-        print("[1] Kamar A",
+        print("\n[1] Kamar A",
                 "\n Harga = Rp 250.000/malam",
-                "\n Faslitas = luas kamar 22 meter2, AC, kamar mandi dalam, telepon, TV")
-        print("[2] Kamar B",
+                "\n Faslitas = luas kamar 22 meter2, AC, kamar mandi dalam, WIFI, TV \n")
+        print("\n[2] Kamar B",
                 "\n Harga = Rp 350.000/malam",
-                "\n Fasilitas = luas kamar 48 meter2 bertipe suite, AC, TV, WIFI, kamar mandi dalam, dan toilet terpisah")
-        
+                "\n Fasilitas = luas kamar 48 meter2 bertipe suite, AC, TV, WIFI, kamar mandi dalam, dan toilet terpisah \n")
+        print("[3] Kembali \n")
+
         pilih2 = input("Masukkan pilihan Anda: ")
         if pilih2.lower() == "1":
             print("Anda telah memilih kamar A")
             print("Permintaan Anda sudah berhasil diproses")
             BackToMenu()
-        else:
+        elif pilih2.lower() == "2":
             print("Anda telah memilih kamar B")
             print("Permintaan Anda sudah berhasil diproses")
             BackToMenu() 
-            
-    else:
+        else :
+            MyBooking()
+    elif pilih1.lower() == "2":
         print("Anda memilih kelas kamar Premium Rooms")
         print("Silahkan pilih harga yang Anda inginkan: ")
         print("[1] Kamar A",
@@ -97,23 +98,64 @@ def MyBooking():
                 "\n Fasilitas = luas kamar 48 meter2 bertipe suite, AC, TV, WIFI, kamar mandi dalam, dan toilet terpisah, lobby ukuran 100m2")
         print("[2] Kamar B",
                 "\n Harga = Rp 1.000.000/malam",
-                "\n Fasilitas = luas kamar 52 meter2 bertipe suite, AC, TV, WIFI, kamar mandi dalam, dan toilet terpisah, lobby ukuran 100m2, laundry, kulkas, jacuzzi")
-        
+                "\n Fasilitas = luas kamar 52 meter2 bertipe suite, AC, TV, WIFI, kamar mandi dalam, dan toilet terpisah, lobby ukuran 100m2, laundry, kulkas, jacuzzi, soffa")
+        print("[3] Kembali")
+
         pilih3 = input("Masukkan pilihan Anda: ")
         if pilih3.lower() == "1":
             print("Anda telah memilih kamar A")
             print("Permintaan Anda sudah berhasil diproses")
             BackToMenu()  
-        else:
+        elif pilih3.lower() == "2":
             print("Anda telah memilih kamar B")
             print("Permintaan Anda sudah berhasil diproses")
-            BackToMenu()    
+            BackToMenu() 
+        else :
+            MyBooking() 
+    else :
+        BackToMenu()
+
+def Rooms():
+    print("\nInformasi kamar yang ingin anda lihat")
+    print("[1] Delux Rooms") 
+    print("[2] Premium Rooms")
+    print("[3] Booking Kamar")
+    print("[4] Kembali \n")  
+
+    pilih = input("Masukkan piihan anda: ")
+    if pilih.lower() == "1":
+        print("Anda memilih kelas kamar Deluxe Rooms")
+        print("Kami memiliki 2 tipe Kamar A dan Kamar B: ")
+        print("\n[1] Kamar A",
+                "\n Harga = Rp 250.000/malam",
+                "\n Faslitas = luas kamar 22 meter2, AC, kamar mandi dalam, WIFI, TV \n")
+        print("\n[2] Kamar B",
+                "\n Harga = Rp 350.000/malam",
+                "\n Fasilitas = luas kamar 48 meter2 bertipe suite, AC, TV, WIFI, kamar mandi dalam, dan toilet terpisah \n")
+        Rooms()
+    elif pilih.lower() == "2":
+        print("Anda memilih kelas kamar Premium Rooms")
+        print("Kami memiliki 2 tipe Kamar A dan Kamar B: ")
+        print("[1] Kamar A",
+                "\n Harga = Rp 500.000/malam",
+                "\n Fasilitas = luas kamar 48 meter2 bertipe suite, AC, TV, WIFI, kamar mandi dalam, dan toilet terpisah, lobby ukuran 100m2")
+        print("[2] Kamar B",
+                "\n Harga = Rp 1.000.000/malam",
+                "\n Fasilitas = luas kamar 52 meter2 bertipe suite, AC, TV, WIFI, kamar mandi dalam, dan toilet terpisah, lobby ukuran 100m2, laundry, kulkas, jacuzzi, soffa")
+        Rooms()
+    elif pilih.lower() == "3":
+        MyBooking()
+    else :
+        BackToMenu()
+
+
 
 def Bills():
-    print("Metode pembayaran: ")
+    print("\nMetode pembayaran: ")
     print("[1] Debbit Card")
     print("[2] OVO")
     print("[3] Cash")
+    print("[4] Kembali \n")
 
     pilih = input("Masukkan pilihan Anda: ")
     if pilih.lower() == "1":
@@ -127,7 +169,7 @@ def Bills():
     BackToMenu()
 
 def Feedback():
-    print("Jika ada saran dan kritik dari Anda: ")
+    print("\n Jika ada saran dan kritik dari Anda: ")
     print("[1] Saran")
     print("[2] Kritik")
 
@@ -145,7 +187,8 @@ def BackToMenu():
     Menu()
 
 def Exit():
+    print("Terimakasih atas kunjungannya :)")
     exit
 
 if __name__ == "__main__":
-    menu()
+    Menu()
