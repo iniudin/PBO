@@ -8,10 +8,10 @@ class Database:
         try:
             if not self.connection:
                 self.connection = mysql.connector.connect(
-                    host="localhost",
-                    user="root",
-                    password="",
-                    database="pbomyhotel",
+                    host="85.10.205.173",
+                    user="userkeren",
+                    password="userkeren12",
+                    database="dbpbohotel",
                 )
             self.cursor = self.connection.cursor()
         except Exception as error:
