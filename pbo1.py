@@ -39,7 +39,7 @@ def Register():
     MenuUtama()
 
 def Menu():
-    print(("*"*20),"Dashboard: ",("*"*20))
+    print("Dashboard: ")
     print("[1] MyBooking")
     print("[2] Rooms")
     print("[3] Bills")
@@ -58,110 +58,125 @@ def Menu():
         Feedback()
     elif pilih.lower() == "5":
         MenuUtama()
+    elif pilih.lower() == "6":
+        Exit()
     else:
         Exit()
 
 def MyBooking():
-    print("\nsilahkan pilih kelas kamar yang Anda inginkan: ")
-    print("[1] Deluxe Rooms")
-    print("[2] Premium Rooms")
-    print("[3] Kembali ")
+    print("Daftar kelas kamar: ")
+    print("[1] Daftar deluxe rooms")
+    print("[2] Daftar premmium roos")
 
-    pilih1 = input("Masukkan pilihan Anda: ")
-    if pilih1.lower() == "1":
-        print("Anda memilih kelas kamar Deluxe Rooms")
-        print("Silahkan pilih harga yang Anda inginkan: ")
-        print("\n[1] Kamar A",
-                "\n Harga = Rp 250.000/malam",
-                "\n Faslitas = luas kamar 22 meter2, AC, kamar mandi dalam, WIFI, TV \n")
-        print("\n[2] Kamar B",
-                "\n Harga = Rp 350.000/malam",
-                "\n Fasilitas = luas kamar 48 meter2 bertipe suite, AC, TV, WIFI, kamar mandi dalam, dan toilet terpisah \n")
-        print("[3] Kembali \n")
-
-        pilih2 = input("Masukkan pilihan Anda: ")
-        if pilih2.lower() == "1":
-            print("Anda telah memilih kamar A")
-            print("Permintaan Anda sudah berhasil diproses")
-            BackToMenu()
-        elif pilih2.lower() == "2":
-            print("Anda telah memilih kamar B")
-            print("Permintaan Anda sudah berhasil diproses")
-            BackToMenu() 
-        else :
-            MyBooking()
-    elif pilih1.lower() == "2":
-        print("Anda memilih kelas kamar Premium Rooms")
-        print("Silahkan pilih harga yang Anda inginkan: ")
-        print("[1] Kamar A",
-                "\n Harga = Rp 500.000/malam",
-                "\n Fasilitas = luas kamar 48 meter2 bertipe suite, AC, TV, WIFI, kamar mandi dalam, dan toilet terpisah, lobby ukuran 100m2")
-        print("[2] Kamar B",
-                "\n Harga = Rp 1.000.000/malam",
-                "\n Fasilitas = luas kamar 52 meter2 bertipe suite, AC, TV, WIFI, kamar mandi dalam, dan toilet terpisah, lobby ukuran 100m2, laundry, kulkas, jacuzzi, soffa")
-        print("[3] Kembali")
-
-        pilih3 = input("Masukkan pilihan Anda: ")
-        if pilih3.lower() == "1":
-            print("Anda telah memilih kamar A")
-            print("Permintaan Anda sudah berhasil diproses")
-            BackToMenu()  
-        elif pilih3.lower() == "2":
-            print("Anda telah memilih kamar B")
-            print("Permintaan Anda sudah berhasil diproses")
-            BackToMenu() 
-        else :
-            MyBooking() 
-    else :
-        BackToMenu()
-
-def Rooms():
-    print("\nInformasi kamar yang ingin anda lihat")
-    print("[1] Delux Rooms") 
-    print("[2] Premium Rooms")
-    print("[3] Booking Kamar")
-    print("[4] Kembali \n")  
-
-    pilih = input("Masukkan piihan anda: ")
+    pilih = input("Pilih kelas kelas kamar yang anda inginkan: ")
     if pilih.lower() == "1":
-        print("Anda memilih kelas kamar Deluxe Rooms")
-        print("Kami memiliki 2 tipe Kamar A dan Kamar B: ")
-        print("\n[1] Kamar A",
-                "\n Harga = Rp 250.000/malam",
-                "\n Faslitas = luas kamar 22 meter2, AC, kamar mandi dalam, WIFI, TV \n")
-        print("\n[2] Kamar B",
-                "\n Harga = Rp 350.000/malam",
-                "\n Fasilitas = luas kamar 48 meter2 bertipe suite, AC, TV, WIFI, kamar mandi dalam, dan toilet terpisah \n")
-        Rooms()
-    elif pilih.lower() == "2":
-        print("Anda memilih kelas kamar Premium Rooms")
-        print("Kami memiliki 2 tipe Kamar A dan Kamar B: ")
-        print("[1] Kamar A",
-                "\n Harga = Rp 500.000/malam",
-                "\n Fasilitas = luas kamar 48 meter2 bertipe suite, AC, TV, WIFI, kamar mandi dalam, dan toilet terpisah, lobby ukuran 100m2")
-        print("[2] Kamar B",
-                "\n Harga = Rp 1.000.000/malam",
-                "\n Fasilitas = luas kamar 52 meter2 bertipe suite, AC, TV, WIFI, kamar mandi dalam, dan toilet terpisah, lobby ukuran 100m2, laundry, kulkas, jacuzzi, soffa")
-        Rooms()
-    elif pilih.lower() == "3":
-        MyBooking()
-    else :
-        BackToMenu()
+        print("[1] Kamar A")
+        print("[2] Kamar B")
+        print("[3] Kamar C")
+        print("[4] Kamar D")
+        print("[5] Kamar E")
 
+        print("Kamar dengan kelas deluxe rooms yang tersedia: ")
+        #Jadi disini kita isi database dari kelas premium kamar itu
+        #Jadi harus ada data kamar dulu biar nanti user tinggal melakukan pemesanan 
+        #Dan pemilihannya itu dari keersedian kamar, kamar mana saja yang kosong dan itu akan jadi pesanan untuk user
+        conn = sqlite3.connect('ProjectDB.db')
+        cursor = conn.cursor()
+        query = "SELECT INTO ListRoomsDeluxe(IDRooms, Tipekamar, Fasilitas, Harga, Booking)"
+        cursor.execute(query)
+        conn.commit()
+        conn.close()
+        pilih1 = input("Pilih kamar: ")
+        #Dan pilihan ini tergantung banyaknya kamar yang tersedia
+        if pilih1.lower == "1":
+            print("Terimakasih atas pemesanannya :)")
+            print("Permintaan anda akan kami proses")
+            Bills()
 
+        elif pilih1.lower == "2":
+            print("Terimakasih atas pemesanannya :)")
+            print("Permintaan anda akan kami proses")
+            Bills()
+
+        elif pilih1.lower == "3":
+            print("Terimakasih atas pemesanannya :)")
+            print("Permintaan anda akan kami proses")
+            Bills()
+
+        elif pilih1.lower == "4":
+            print("Terimakasih atas pemesanannya :)")
+            print("Permintaan anda akan kami proses")
+            Bills()
+
+        elif pilih1.lower == "5":
+            print("Terimakasih atas pemesanannya :)")
+            print("Permintaan anda akan kami proses")
+            Bills()
+
+        else:
+            ListRooms()
+
+    else:
+        print("[1] Kamar A")
+        print("[2] Kamar B")
+        print("[3] Kamar C")
+        print("[4] Kamar D")
+        print("[5] Kamar E")
+
+        print("Kamar dengan kelas premium rooms yang tersedia: ")
+        #Jadi disini kita isi database dari kelas premium kamar itu
+        #Jadi harus ada data kamar dulu biar nanti user tinggal melakukan pemesanan 
+        #Dan pemilihannya itu dari keersedian kamar, kamar mana saja yang kosong dan itu akan jadi pesanan untuk user
+        conn = sqlite3.connect('ProjectDB.db')
+        cursor = conn.cursor()
+        query = "SELECT INTO ListRoomsPremiums(IDRooms, Tipekamar, Fasilitas, Harga, Booking)"
+        cursor.execute(query)
+        conn.commit()
+        conn.close()
+        pilih2 = input("Pilih kamar: ")
+        #Dan pilihan ini tergantung banyaknya kamar yang tersedia
+        if pilih2.lower == "1":
+            print("Terimakasih atas pemesanannya :)")
+            print("Permintaan anda akan kami proses")
+            Bills()
+
+        elif pilih2.lower == "2":
+            print("Terimakasih atas pemesanannya :)")
+            print("Permintaan anda akan kami proses")
+            Bills()
+
+        elif pilih2.lower == "3":
+            print("Terimakasih atas pemesanannya :)")
+            print("Permintaan anda akan kami proses")
+            Bills()
+
+        elif pilih2.lower == "4":
+            print("Terimakasih atas pemesanannya :)")
+            print("Permintaan anda akan kami proses")
+            Bills()
+
+        elif pilih2.lower == "5":
+            print("Terimakasih atas pemesanannya :)")
+            print("Permintaan anda akan kami proses")
+            Bills()
+
+        else:
+            ListRooms()
 
 def Bills():
-    print("\nMetode pembayaran: ")
+    print("Metode pembayaran: ")
     print("[1] Debbit Card")
-    print("[2] OVO")
-    print("[3] Cash")
-    print("[4] Kembali \n")
+    print("[2] Cash")
 
     pilih = input("Masukkan pilihan Anda: ")
     if pilih.lower() == "1":
-        card = input("Masukkan PIN Anda: ")
-        print("Transaksi selesai, Terimakasih :)")
-    elif pilih.lower() == "2":
+        Pin = input("Masukkan PIN Anda: ")
+        conn = sqlite3.connect('ProjectDB.db')
+        cursor = conn.cursor()
+        query = f"INSERT INTO Bills(Pin) VALUES('{Pin}')"
+        cursor.execute(query)
+        conn.commit()
+        conn.close()
         print("Transaksi selesai, Terimakasih :)")
     else: 
         print("Silahkan menuju kasir untuk melakukan pembayaran, Terimakasih :)")
@@ -169,7 +184,7 @@ def Bills():
     BackToMenu()
 
 def Feedback():
-    print("\n Jika ada saran dan kritik dari Anda: ")
+    print("Jika ada saran dan kritik dari Anda: ")
     print("[1] Saran")
     print("[2] Kritik")
 
@@ -177,9 +192,23 @@ def Feedback():
     if pilih.lower() == "1":
         print("Saran yang ingin Anda sampaikan: ")
         saran = input()
+        conn = sqlite3.connect('ProjectDB.db')
+        cursor = conn.cursor()
+        query = f"INSERT INTO Saran(Saran) VALUES('{Saran}')"
+        cursor.execute(query)
+        conn.commit()
+        conn.close()
+        print("Terima Kasih atas sarannya :)")
     else:
         print("Kritik yang igin Anda sampaikan: ")
         kritik = input()
+        conn = sqlite3.connect('ProjectDB.db')
+        cursor = conn.cursor()
+        query = f"INSERT INTO Kritik(Kritik) VALUES('{Kritik}')"
+        cursor.execute(query)
+        conn.commit()
+        conn.close()
+        print("Terima Kasih atas kritiknya :)")
 
     BackToMenu()
 
@@ -187,8 +216,7 @@ def BackToMenu():
     Menu()
 
 def Exit():
-    print("Terimakasih atas kunjungannya :)")
     exit
 
 if __name__ == "__main__":
-    Menu()
+    menu()
