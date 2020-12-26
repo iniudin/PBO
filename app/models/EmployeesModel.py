@@ -1,5 +1,4 @@
-from app.Database.DBconnection import Database
-import pendulum
+from app.database.connection import Database
 
 
 class Employees(Database):
@@ -16,7 +15,7 @@ class Employees(Database):
             address VARCHAR(50) NOT NULL,
             gender ENUM('L', 'P') NOT NULL,
             is_admin TINYINT(1) NOT NULL,
-            register_date DATETIME,
+            register_date DATETIME DEFAULT CURRENT_TIMESTAMP,,
             PRIMARY KEY(id)
         )
         """
@@ -48,7 +47,6 @@ class Employees(Database):
                 address,
                 gender,
                 is_admin,
-                timeNow,
             ),
         )
         self.commit()

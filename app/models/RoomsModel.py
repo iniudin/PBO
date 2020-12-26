@@ -1,4 +1,4 @@
-from app.Database.DBconnection import Database
+from app.database.connection import Database
 
 
 class Rooms(Database):

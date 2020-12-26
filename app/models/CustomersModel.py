@@ -1,4 +1,4 @@
-from app.Database.DBconnection import Database
+from app.database.connection import Database
 
 
 class Customers(Database):
@@ -27,11 +27,10 @@ class Customers(Database):
         phone,
         address,
         gender,
-        level,
     ):
         self.execute(
-            "INSERT INTO customers (first_name, last_name, email, phone, address, gender, type) values (?,?,?,?,?,?,?,?)",
-            (first_name, last_name, email, phone, address, gender, level),
+            "INSERT INTO customers (first_name, last_name, email, phone, address, gender) values (?,?,?,?,?,?,?,?)",
+            (first_name, last_name, email, phone, address, gender),
         )
         self.commit()
 

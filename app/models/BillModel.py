@@ -1,4 +1,4 @@
-from app.Database.DBconnection import Database
+from app.database.connection import Database
 
 
 class Bills(Database):
@@ -6,11 +6,9 @@ class Bills(Database):
         query = """
         CREATE TABLE IF NOT EXISTS bills (
             id INT AUTO_INCREMENT,
-            customer_id INT NOT NULL,
-            room_id INT NOT NULL,
-            reservation_id DATETIME,
-            price INT NOT NULL,
-            PRIMARY KEY(id)
+            reservation_id INT,
+            PRIMARY KEY(id),
+            FOREIGN KEY (reservation_id) REFERENCES reservations(id),
         )"""
         self.execute(query)
         self.commit()
@@ -23,7 +21,7 @@ class Bills(Database):
         price,
     ):
         self.execute(
-            "INSERT INTO bills (customer_id, room_id, reservation_id, price) values (?,?,?,?)",
+            "INSERT INTO bills (reservation_id) values (?,?,?,?)",
             (
                 customer_id,
                 room_id,

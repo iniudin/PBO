@@ -1,4 +1,4 @@
-from app.Database.DBconnection import Database
+from app.database.connection import Database
 
 
 class Reservations(Database):
@@ -8,9 +8,12 @@ class Reservations(Database):
             id INT AUTO_INCREMENT,
             customer_id INT NOT NULL,
             room_id INT NOT NULL,
-            check_in DATETIME,
-            check_out DATETIME,
-            PRIMARY KEY(id)
+            check_in DATETIME NOT NULL,
+            check_out DATETIME NOT NULL,
+            price INT NOT NULL,
+            PRIMARY KEY(id),
+            FOREIGN KEY (customer_id) REFERENCES customers(id),
+            FOREIGN KEY (room_id) REFERENCES rooms(id)
         )"""
         self.execute(query)
         self.commit()
