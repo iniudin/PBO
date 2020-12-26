@@ -5,33 +5,29 @@ class RoomModel(Database):
     def create_table(self):
         query = """
         CREATE TABLE IF NOT EXISTS rooms (
-            room_id INTEGER PRIMARY KEY,
-            type VARCHAR(10),
-            details VARCHAR(250)
+            id INT AUTO_INCREMENT,
+            type VARCHAR(20),
+            description VARCHAR(250),
+            price INT,
+            PRIMARY KEY(id)
         )"""
         self.execute(query)
         self.commit()
 
-    def insert(self, type, detail):
-        self.execute("INSERT INTO rooms (type, details) values (?,?)", (type, detail))
-        self.commit()
-
-    def update(self, id, type=None, detail=None):
-        if type:
-            query = "UPDATE rooms SET type = ? WHERE room_id = ?"
-            value = (type, id)
-        elif detail:
-            query = "UPDATE rooms SET detail = ? WHERE room_id = ?"
-            value = (detail, id)
-        else:
-            query = "UPDATE rooms SET type = ?, detail = ? WHERE room_id = ?"
-            value = (type, detail, id)
-        self.execute(query, value)
+    def insert(self, type: str, description: str, price: int):
+        self.execute(
+            "INSERT INTO rooms (type, description, price) values (?,?,?)",
+            (type, description, price),
+        )
         self.commit()
 
     def fetch_all(self):
         self.execute("SELECT * FROM rooms")
         result = self.cursor.fetchall()
+
+    def find(self, id):
+        self.execute("SELECT * FROM rooms WHERE room_id = ?", (id,))
+        result = self.cursor.fetchone()
 
     def delete(self, id):
         self.execute("DELETE FROM rooms WHERE room_id = ?", (id,))

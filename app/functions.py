@@ -1,7 +1,7 @@
 import platform
 import os
 import time
-from humanfriendly import format_pretty_table
+from humanfriendly.tables import format_pretty_table as format_table
 
 
 def clear():
@@ -14,5 +14,5 @@ def headline(text, /, border="♦", *, width=50):
     print(f" {text} ".center(width, border))
 
 
-def print_table(table, value):
-    print(format_pretty_table(result, table))
+def print_table(column, value):
+    print(format_table(result, column))

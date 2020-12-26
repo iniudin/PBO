@@ -1,5 +1,4 @@
-# import mysql.connector
-import sqlite3
+import mysql.connector
 
 
 class Database:
@@ -8,7 +7,12 @@ class Database:
     def __init__(self):
         try:
             if not self.connection:
-                self.connection = sqlite3.connect("database.sqlite3")
+                self.connection = mysql.connector.connect(
+                    host="localhost",
+                    user="root",
+                    password="",
+                    database="pbomyhotel",
+                )
             self.cursor = self.connection.cursor()
         except Exception as error:
             print(error)

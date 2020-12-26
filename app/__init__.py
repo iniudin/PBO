@@ -1,6 +1,6 @@
 from app.functions import headline
-from app.Models.RoomModel import Room
 from app.Database.DBconnection import Database
+from app.Models.UserModel import Users
 
 
 class App:
@@ -15,6 +15,11 @@ class App:
             self.__session = username + password
         else:
             print("Kombinasi user dan password salah")
+            check = input("Mau daftar? (y/N)")
+            if check.lower == "y":
+                self.register()
+            else:
+                exit()
 
     def register(self):
         pass
@@ -36,15 +41,8 @@ class App:
             pass
 
     def run(self):
-
-        # data = Database()
-        # Room().create_table()
-        # Room().drop()
-        # Room().insert("biasa", "ya biasa biasa aja")
-        # Room().update(id=2, type="luar biasa")
-        Room().fetch_all()
-        # while True:
-        # if not self.__session:
-        #     self.login()
-        # else:
-        #     self.main_menu()
+        while True:
+            if not self.__session:
+                self.login()
+            else:
+                self.main_menu()
