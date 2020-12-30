@@ -1,4 +1,5 @@
-import mysql.connector
+from pymysql import connect, cursors
+import time
 
 
 class Database:
@@ -7,30 +8,35 @@ class Database:
     def __init__(self):
         try:
             if not self.connection:
-                self.connection = mysql.connector.connect(
-                    host="85.10.205.173",
-                    user="userkeren",
-                    password="userkeren12",
-                    database="dbpbohotel",
+                self.connection = connect(
+                    host="localhost",
+                    user="root",
+                    password="",
+                    database="pbomyhotel",
+                    cursorclass=cursors.DictCursor,
                 )
             self.cursor = self.connection.cursor()
         except Exception as error:
             print(error)
 
-    def __del__(self):
-        self.connection.close()
-
     def execute(self, query, value=None):
-        if value:
-            self.cursor.execute(query, value)
-        else:
-            self.cursor.execute(query)
+        try:
+            if value:
+                self.cursor.execute(query, value)
+            else:
+                self.cursor.execute(query)
+        except Exception as error:
+            print(error)
+
 
     def execute_many(self, query, values=None):
-        if values:
-            self.cursor.executemany(query, values)
-        else:
-            self.cursor.executemany(query)
+        try:
+            if value:
+                self.cursor.executemany(query, value)
+            else:
+                self.cursor.executemany(query)
+        except Exception as error:
+            print(error)
 
     def commit(self):
         self.connection.commit()

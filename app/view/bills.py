@@ -1,9 +1,9 @@
 from app.models.BillModel import Bills
 from app.functions import headline
 
+
 class BillsView(Bills):
- #       SHOW TABLES; table bills
-        def menu(self):
+    def menu(self):
         headline("Pembayaran")
         text = ["1. Via Debit", "2. Cash", "0. Menu utama"]
 

@@ -5,8 +5,8 @@ class Bills(Database):
     def create_table(self):
         query = """
         CREATE TABLE IF NOT EXISTS bills (
-            id INT AUTO_INCREMENT,
-            reservation_id INT,
+            `id` INT AUTO_INCREMENT,
+            `reservation_id` INT,
             PRIMARY KEY(id),
             FOREIGN KEY (reservation_id) REFERENCES reservations(id),
         )"""
@@ -21,7 +21,7 @@ class Bills(Database):
         price,
     ):
         self.execute(
-            "INSERT INTO bills (reservation_id) values (?,?,?,?)",
+            "INSERT INTO `bills` (reservation_id) VALUES (%s,%s,%s,%s)",
             (
                 customer_id,
                 room_id,
@@ -32,16 +32,18 @@ class Bills(Database):
         self.commit()
 
     def fetch_all(self):
-        self.execute("SELECT * FROM bills")
+        self.execute("SELECT * FROM `bills`")
         result = self.cursor.fetchall()
+        return result
 
     def find(self, id):
-        self.execute("SELECT * FROM bills WHERE id = ?", (id,))
+        self.execute("SELECT * FROM `bills` WHERE id = %s", (id,))
         result = self.cursor.fetchone()
+        return result
 
     def delete(self, id):
-        self.execute("DELETE FROM bills WHERE id = ?", (id,))
+        self.execute("DELETE FROM `bills` WHERE id = %s", (id,))
 
     def drop(self):
-        self.execute("DROP TABLE bills")
+        self.execute("DROP TABLE `bills`")
         self.commit()
