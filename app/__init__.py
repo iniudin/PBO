@@ -1,4 +1,3 @@
-from app.database.connection import Database
 from app.models.users import UserModel
 from app.functions import print_table, headline
 from app.view.employees import EmployeesView
@@ -75,6 +74,8 @@ class App:
 
     def run(self):
         while True:
+            # pendulum.now("Asia/Jakarta")
+
             if not self.__session:
                 self.login()
             else:
