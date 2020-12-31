@@ -24,10 +24,10 @@ class CustomersView(UserModel):
             print("Perintah tidak ditemukan")
 
     def list_customers(self, no_input=None):
-        admins = self.get_customers()
-        column = ["Nama Lengkap", "Username", "Tanggal Daftar"]
-        # print_table("Daftar Pelanggan", column, admins)
-        print(admins)
+        customers = self.get_customers()
+        column = [i.title() for i in customers[0].keys()]
+        rows = [list(i.values()) for i in customers]
+        print_table("Daftar Pelanggan", column, rows)
         if no_input:
             self.back_to_menu
 
@@ -35,9 +35,10 @@ class CustomersView(UserModel):
         headline("Cari Pelanggan")
         username = input("Masukkan username: ")
         admins = self.find_user(username)
-        column = ["Nama Lengkap", "Username", "Tanggal Daftar"]
+        column = [i.title() for i in admins.keys()]
+        rows = [[i for i in admins.values()]]
         if len(admins) > 0:
-            print_table("Daftar Pelanggan", column, admins)
+            print_table("User ditemukan", column, rows)
         else:
             print("User tidak ditemukan")
         self.back_to_menu

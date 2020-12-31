@@ -1,7 +1,7 @@
 from app.database.connection import Database
 
 
-class Bills(Database):
+class BillsModel(Database):
     def create_table(self):
         query = """
         CREATE TABLE IF NOT EXISTS bills (

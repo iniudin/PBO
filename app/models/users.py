@@ -25,17 +25,6 @@ class UserModel(Database):
         self.execute(query)
         self.commit()
 
-    def login_session(self, username, password):
-        self.execute(
-            """
-            SELECT id, username, is_admin
-            FROM users
-            WHERE username=%s AND password=%s""",
-            (username, encode_md5(password)),
-        )
-        result = self.cursor.fetchone()
-        return result
-
     def add_user(
         self,
         first_name,
@@ -90,19 +79,10 @@ class UserModel(Database):
         FROM
             `users`
         WHERE
-            `is_admin` >= 0
+            `is_admin` > 0
         """
         )
-        result = []
-        for user in self.cursor.fetchall():
-            result.append(
-                (
-                    user["fullname"],
-                    user["username"],
-                    "Owner" if user["is_admin"] == 2 else "Admin",
-                    user["register_date"],
-                )
-            )
+        result = self.cursor.fetchall()
         return result
 
     def get_customers(self):
@@ -115,7 +95,6 @@ class UserModel(Database):
             phone,
             address,
             gender,
-            is_admin,
             register_date
         FROM
             `users`
@@ -141,16 +120,7 @@ class UserModel(Database):
         """,
             (username),
         )
-        result = []
-        for user in self.cursor.fetchall():
-            result.append(
-                (
-                    user["fullname"],
-                    user["username"],
-                    "Admin" if user["is_admin"] > 0 else "Customers",
-                    user["register_date"],
-                )
-            )
+        result = self.cursor.fetchone()
         return result
 
     def update_users(

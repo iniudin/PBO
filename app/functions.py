@@ -1,12 +1,11 @@
-import platform
+import platform as plt
 import os
-import time
 from humanfriendly.tables import format_pretty_table as format_table
 from hashlib import md5
 
 
 def clear():
-    return os.system("cls") if platform.system() == "Windows" else os.system("clear")
+    return os.system("cls") if plt.system() == "Windows" else os.system("clear")
 
 
 def print_table(text, column, data, is_clear=True, /, border="■", *, width=50):

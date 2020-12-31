@@ -31,8 +31,9 @@ class EmployeesView(UserModel):
 
     def list_employee(self, no_input=None):
         admins = self.get_admins()
-        column = ["Nama Lengkap", "Username", "Role", "Tanggal Daftar"]
-        print_table("Daftar Karyawan", column, admins)
+        column = [i.title() for i in admins[0].keys()]
+        rows = [list(i.values()) for i in admins]
+        print_table("Daftar Karyawan", column, rows)
         if no_input:
             self.back_to_menu
 
@@ -46,20 +47,17 @@ class EmployeesView(UserModel):
         phone = input("Masukkan phone: ")
         address = input("Masukkan address: ")
         gender = input("Masukkan gender (L/P): ")
-        try:
-            self.add_user(
-                first_name=first_name,
-                last_name=last_name,
-                username=username,
-                password=password,
-                email=email,
-                phone=phone,
-                address=address,
-                gender=gender,
-                is_admin=1,
-            )
-        except Exception as err:
-            print(err)
+        self.add_user(
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            password=password,
+            email=email,
+            phone=phone,
+            address=address,
+            gender=gender,
+            is_admin=1,
+        )
         print("Berhasil menambahkan admin.")
         self.main_menu()
 
@@ -67,9 +65,10 @@ class EmployeesView(UserModel):
         headline("Cari karyawan")
         username = input("Masukkan username: ")
         admins = self.find_user(username)
-        column = ["Nama Lengkap", "Username", "Role", "Tanggal Daftar"]
+        column = [i.title() for i in admins.keys()]
+        rows = [[i for i in admins.values()]]
         if len(admins) > 0:
-            print_table("Daftar Karyawan", column, admins)
+            print_table("User ditemukan", column, rows)
         else:
             print("User tidak ditemukan")
         self.back_to_menu
@@ -88,8 +87,8 @@ class EmployeesView(UserModel):
         email = input("Masukkan email (baru):")
         phone = input("Masukkan phone (baru):")
         address = input("Masukkan address (baru):")
-        is_agree = input("Apakah anda yakin untuk mengupdate data karyawan?")
-        if is_agree:
+        is_agree = input("Apakah anda yakin untuk mengupdate data karyawan? (y/n)")
+        if is_agree.lower() == "y":
             self.update_employee(
                 first_name,
                 last_name,
@@ -101,6 +100,10 @@ class EmployeesView(UserModel):
                 is_agree,
                 user_id,
             )
+            print("Detail karyawan berhasil di update")
+        else:
+            print("Batal mengupdate detail karyawan")
+        self.back_to_menu
 
     def delete_employee(self):
         headline("Hapus karyawan")

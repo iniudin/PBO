@@ -1,18 +1,21 @@
 from app.models.users import UserModel
+from app.models.rooms import RoomModel
+
+from app.models.auth import Auth
 from app.functions import print_table, headline
 from app.view.employees import EmployeesView
 from app.view.customers import CustomersView
+from app.view.rooms import RoomsView
 
 
 class App:
-
-    __session: list = []
+    __session = []
 
     def login(self):
         headline("Login")
         username = input("Username: ")
         password = input("Password: ")
-        self.__session = UserModel().login_session(username, password)
+        self.__session = Auth().login_session(username, password)
         if self.__session:
             self.main_menu()
         else:
@@ -59,6 +62,7 @@ class App:
             ["4", "Transaksi", "Catatan transaksi"],
             ["0", "Keluar", "-"],
         )
+
         print_table("Main Menu", colomn, menu_owner)
         choice = int(input("> "))
         if choice == 0:
@@ -68,15 +72,23 @@ class App:
         elif choice == 2:
             CustomersView().main_menu()
         elif choice == 3:
-            pass
+            RoomsView().main_menu()
         elif choice == 4:
             pass
 
     def run(self):
         while True:
-            # pendulum.now("Asia/Jakarta")
-
+            """
             if not self.__session:
-                self.login()
-            else:
-                self.main_menu()
+                column = ["No", "Perintah"]
+                rows = [["1", "Login"], ["2", "Register"], ["0", "Keluar"]]
+                print_table("Selamat datang di MyHotel", column, rows)
+                choice = int(input("> "))
+                if choice == 0:
+                    exit()
+                elif choice == 1:
+                    self.login()
+                elif choice == 2:
+                    self.register()
+            else:"""
+            self.main_menu()
