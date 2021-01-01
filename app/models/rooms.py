@@ -34,8 +34,11 @@ class RoomModel(Database):
         )
         self.commit()
 
-    def get_rooms(self):
-        self.execute("SELECT * FROM `rooms`")
+    def get_rooms(self, empty=None):
+        if empty:
+            self.execute("SELECT * FROM `rooms` WHERE `status` = 0")
+        else:
+            self.execute("SELECT * FROM `rooms`")
         result = self.cursor.fetchall()
         return result
 
@@ -45,9 +48,8 @@ class RoomModel(Database):
         return result
 
     def change_status(self, code, status):
-        status = not status
         query = "UPDATE rooms SET status = %s WHERE code = %s"
-        self.execute(query, (int(status), code))
+        self.execute(query, (status, code))
 
     def delete(self, code):
         self.execute("DELETE FROM rooms WHERE code = %s", (code,))

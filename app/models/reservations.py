@@ -1,7 +1,8 @@
 from app.database.connection import Database
+from app.functions import get_date_today
 
 
-class Reservations(Database):
+class ReservationModel(Database):
     def create_table(self):
         query = """
         CREATE TABLE IF NOT EXISTS `reservations` (
@@ -9,53 +10,50 @@ class Reservations(Database):
             `customer_id` INT NOT NULL,
             `room_id` INT NOT NULL,
             `check_in` DATETIME NOT NULL,
-            `check_out` DATETIME NOT NULL,
-            `price` INT NOT NULL,
+            `check_out` DATETIME,
             PRIMARY KEY(id),
-            FOREIGN KEY (customer_id) REFERENCES users(id),
-            FOREIGN KEY (room_id) REFERENCES rooms(id)
+            FOREIGN KEY(customer_id) REFERENCES users(id),
+            FOREIGN KEY(room_id) REFERENCES rooms(id)
         )"""
         self.execute(query)
         self.commit()
 
-    def insert(
+    def check_in(
         self,
         customer_id,
         room_id,
-        check_in,
-        check_out,
     ):
         self.execute(
             """
             INSERT INTO reservations (
                 customer_id,
                 room_id,
-                check_in,
-                check_out
+                check_in
             )
-            VALUES (%s,%s,%s,%s)
+            VALUES (%s,%s,%s)
             """,
-            (
-                customer_id,
-                room_id,
-                check_in,
-                check_out,
-            ),
+            (customer_id, room_id, get_date_today()),
         )
         self.commit()
 
-    def fetch_all(self):
-        self.execute("SELECT * FROM reservations")
+    def check_out(self, id, customer_id):
+        self.execute(
+            "UPDATE reservations SET checkout = %s WHERE id = %s AND customer_id=%s",
+            (get_date_today(), id, customer_id),
+        )
+
+    def get_reservation(self, user_id):
+        self.execute("SELECT * FROM reservations WHERE customer_id = %s", (id,))
         result = self.cursor.fetchall()
         return result
 
     def find(self, id):
-        self.execute("SELECT * FROM reservations WHERE id = ?", (id,))
+        self.execute("SELECT * FROM reservations WHERE id = %s", (id,))
         result = self.cursor.fetchone()
         return result
 
     def delete(self, id):
-        self.execute("DELETE FROM reservations WHERE id = ?", (id,))
+        self.execute("DELETE FROM reservations WHERE id = %s", (id,))
 
     def drop(self):
         self.execute("DROP TABLE reservations")

@@ -1,4 +1,4 @@
-from app.models.rooms import RoomModel
+from app.models import RoomModel
 from app.functions import headline, print_table
 
 
@@ -16,7 +16,7 @@ class RoomsView(RoomModel):
         if choice == 0:
             return
         elif choice == 1:
-            self.list_rooms(no_input=True)
+            self.list_rooms()
         elif choice == 2:
             self.add_room()
         elif choice == 3:
@@ -28,13 +28,15 @@ class RoomsView(RoomModel):
         else:
             print("Perintah tidak ditemukan")
 
-    def list_rooms(self, no_input=None):
+    def list_rooms(self, session=None):
         rooms = self.get_rooms()
         column = [i.title() for i in rooms[0].keys()]
         rows = [list(i.values()) for i in rooms]
         print_table("Daftar Kamar", column, rows)
-        if no_input:
-            self.back_to_menu
+        if session and session["is_admin"] == 0:
+            input("Status:\n1 = Dipesan\n0 = Kosong\nTekan Enter untuk kembali ke Menu")
+            return
+        self.back_to_menu
 
     def add_room(self):
         headline("Tambah Kamar")

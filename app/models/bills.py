@@ -1,37 +1,31 @@
 from app.database.connection import Database
 
 
-class BillsModel(Database):
+class BillModel(Database):
     def create_table(self):
         query = """
         CREATE TABLE IF NOT EXISTS bills (
             `id` INT AUTO_INCREMENT,
             `reservation_id` INT,
+            `price` INT NOT NULL,
+            `date` DATETIME DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY(id),
-            FOREIGN KEY (reservation_id) REFERENCES reservations(id),
+            FOREIGN KEY(reservation_id) REFERENCES reservations(id)
         )"""
         self.execute(query)
         self.commit()
 
     def insert(
         self,
-        customer_id,
-        room_id,
         reservation_id,
-        price,
     ):
         self.execute(
-            "INSERT INTO `bills` (reservation_id) VALUES (%s,%s,%s,%s)",
-            (
-                customer_id,
-                room_id,
-                reservation_id,
-                price,
-            ),
+            "INSERT INTO `bills` (reservation_id) VALUES (%s)",
+            (reservation_id,),
         )
         self.commit()
 
-    def fetch_all(self):
+    def get_all(self):
         self.execute("SELECT * FROM `bills`")
         result = self.cursor.fetchall()
         return result

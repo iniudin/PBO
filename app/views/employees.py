@@ -1,4 +1,4 @@
-from app.models.users import UserModel
+from app.models import UserModel
 from app.functions import headline, print_table
 
 

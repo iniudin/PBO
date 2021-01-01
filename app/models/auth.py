@@ -3,8 +3,6 @@ from app.functions import encode_md5
 
 
 class Auth(UserModel):
-    SESSION = []
-
     def login_session(self, username, password):
         self.execute(
             """
@@ -13,5 +11,5 @@ class Auth(UserModel):
             WHERE username=%s AND password=%s""",
             (username, encode_md5(password)),
         )
-        self.SESSION = self.cursor.fetchone()
-        return self.SESSION
+        SESSION = self.cursor.fetchone()
+        return SESSION
