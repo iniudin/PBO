@@ -36,15 +36,16 @@ class ReservationModel(Database):
         )
         self.commit()
 
-    def check_out(self, id, customer_id):
+    def check_out(self, _id, customer_id):
         self.execute(
-            "UPDATE reservations SET checkout = %s WHERE id = %s AND customer_id=%s",
-            (get_date_today(), id, customer_id),
+            "UPDATE reservations SET check_out = %s WHERE id = %s AND customer_id=%s",
+            (get_date_today(), _id, customer_id),
         )
+        self.commit()
 
     def get_reservation(self, user_id):
-        self.execute("SELECT * FROM reservations WHERE customer_id = %s", (id,))
-        result = self.cursor.fetchall()
+        self.execute("SELECT * FROM reservations WHERE customer_id = %s", (user_id))
+        result = self.cursor.fetchone()
         return result
 
     def find(self, id):

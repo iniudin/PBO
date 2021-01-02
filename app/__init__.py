@@ -1,6 +1,12 @@
-from app.models import UserModel, Auth  # ReservationModel, BillModel
+from app.models import UserModel, Auth
 from app.functions import print_table, headline
-from app.views import EmployeesView, CustomersView, RoomsView, ReservationsView
+from app.views import (
+    EmployeesView,
+    CustomersView,
+    RoomsView,
+    ReservationsView,
+    BillsView,
+)
 
 
 class App:
@@ -56,22 +62,21 @@ class App:
             ["2", "Pelanggan", "Manajemen pelanggan"],
             ["3", "Kamar", "Manajemen Kamar"],
             ["4", "Transaksi", "Catatan transaksi"],
-            ["5", "Feedback", "Feedback dari pelanggan"],
             ["0", "Keluar", "-"],
         )
 
         menu_admin = (
             ["1", "Pelanggan", "Manajemen pelanggan"],
             ["2", "Kamar", "Manajemen Kamar"],
-            ["3", "Transaksi", "Catatan transaksi"],
-            ["4", "Feedback", "Feedback dari pelanggan"],
+            ["3", "Transaksi", "Cek Transaksi"],
             ["0", "Keluar", "-"],
         )
+
         menu_user = (
             ["1", "Kamar", "Lihat daftar kamar yang tersedia"],
-            ["2", "Reservasi", "Pesan kamar disini"],
-            ["3", "Check out", "Check out dulu boss."],
-            ["4", "Feedback", "Beri feedback dari layanan kami"],
+            ["2", "Check in", "Pesan kamar disini"],
+            ["3", "Check out", "Check out kamar disini."],
+            ["4", "Pembayaran", "Bayar tagihan anda disini"],
             ["0", "Keluar", "-"],
         )
 
@@ -107,8 +112,7 @@ class App:
                 RoomsView().main_menu()
             elif choice == 3:
                 pass
-            elif choice == 4:
-                pass
+
         # Pelanggan
         else:
             if choice == 0:
@@ -118,15 +122,11 @@ class App:
             elif choice == 2:
                 ReservationsView().book_room(session=self.__session)
             elif choice == 3:
-                pass
+                ReservationsView().checkout_room(session=self.__session)
             elif choice == 4:
-                pass
+                BillsView().mybills(session=self.__session)
 
     def run(self):
-        # BillModel().drop()
-        # ReservationModel().drop()
-        # ReservationModel().create_table()
-        # BillModel().create_table()
         while True:
             if not self.__session:
                 column = ["No", "Perintah"]

@@ -1,8 +1,10 @@
+from humanfriendly.tables import format_pretty_table as format_table
+from hashlib import md5
+
 import platform as plt
 import os
 import pendulum
-from humanfriendly.tables import format_pretty_table as format_table
-from hashlib import md5
+import pytz
 
 
 def clear():
@@ -16,7 +18,6 @@ def print_table(text, column, data, /, border="■", *, width=50):
 
 
 def headline(text, /, border="■", *, width=50):
-    # clear()
     print(f" {text} ".center(width, border))
 
 
@@ -26,3 +27,12 @@ def encode_md5(password):
 
 def get_date_today():
     return pendulum.now("Asia/Jakarta")
+
+
+def count_days(datetime_start, datetime_end):
+    utc = pytz.UTC
+    datetime_start = utc.localize(datetime_start)
+    datetime_end = utc.localize(datetime_end)
+
+    delta = datetime_end - datetime_start
+    return delta.days

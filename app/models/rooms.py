@@ -36,25 +36,26 @@ class RoomModel(Database):
 
     def get_rooms(self, empty=None):
         if empty:
-            self.execute("SELECT * FROM `rooms` WHERE `status` = 0")
+            self.execute("SELECT * FROM rooms WHERE status = 0")
         else:
-            self.execute("SELECT * FROM `rooms`")
+            self.execute("SELECT * FROM rooms")
         result = self.cursor.fetchall()
         return result
 
-    def find(self, code):
-        self.execute("SELECT * FROM `rooms` WHERE `code` = %s", (code))
+    def find(self, _id):
+        self.execute("SELECT * FROM rooms WHERE id = %s", (_id))
         result = self.cursor.fetchone()
         return result
 
-    def change_status(self, code, status):
-        query = "UPDATE rooms SET status = %s WHERE code = %s"
-        self.execute(query, (status, code))
+    def change_status(self, _id, status):
+        query = "UPDATE rooms SET status = %s WHERE id = %s"
+        self.execute(query, (status, _id))
+        self.commit()
 
-    def delete(self, code):
-        self.execute("DELETE FROM rooms WHERE code = %s", (code,))
+    def delete(self, _id):
+        self.execute("DELETE FROM rooms WHERE id = %s", (_id,))
         self.commit()
 
     def drop(self):
-        self.execute("DROP TABLE `users`")
+        self.execute("DROP TABLE rooms")
         self.commit()

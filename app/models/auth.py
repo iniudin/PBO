@@ -11,5 +11,5 @@ class Auth(UserModel):
             WHERE username=%s AND password=%s""",
             (username, encode_md5(password)),
         )
-        SESSION = self.cursor.fetchone()
-        return SESSION
+        session = self.cursor.fetchone()
+        return session

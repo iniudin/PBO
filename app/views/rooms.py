@@ -49,8 +49,8 @@ class RoomsView(RoomModel):
 
     def find_room(self):
         headline("Cari Kamar")
-        code = input("Masukkan kode kamar: ")
-        room = self.find(code)
+        _id = input("Masukkan id kamar: ")
+        room = self.find(_id)
         column = [i.title() for i in room.keys()]
         rows = [[i for i in room.values()]]
         if len(room) > 0:
@@ -60,9 +60,9 @@ class RoomsView(RoomModel):
         self.back_to_menu
 
     def delete_room(self):
-        headline("Hapus karyawan")
-        username = input("Masukkan username: ")
-        self.delete(username)
+        headline("Hapus Kamar")
+        kamar_id = input("Masukkan id kamar: ")
+        self.delete(kamar_id)
         self.back_to_menu
 
     @property
