@@ -68,7 +68,7 @@ class App:
         menu_admin = (
             ["1", "Pelanggan", "Manajemen pelanggan"],
             ["2", "Kamar", "Manajemen Kamar"],
-            ["3", "Transaksi", "Cek Transaksi"],
+            ["3", "Transaksi", "Konfirmasi pembayaran"],
             ["0", "Keluar", "-"],
         )
 
@@ -100,7 +100,7 @@ class App:
             elif choice == 3:
                 RoomsView().main_menu()
             elif choice == 4:
-                pass
+                BillsView().owner_view()
 
         # karyawan
         elif self.__session["is_admin"] == 1:
@@ -111,7 +111,7 @@ class App:
             elif choice == 2:
                 RoomsView().main_menu()
             elif choice == 3:
-                pass
+                BillsView().admin_view()
 
         # Pelanggan
         else:

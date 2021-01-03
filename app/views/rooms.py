@@ -45,7 +45,7 @@ class RoomsView(RoomModel):
         price = input("Harga kamar: ")
         self.add(room_type, room_desc, price)
         print("Berhasil menambahkan kamar.")
-        self.main_menu()
+        self.back_to_menu
 
     def find_room(self):
         headline("Cari Kamar")

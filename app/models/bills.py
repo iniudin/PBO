@@ -23,9 +23,11 @@ class BillModel(Database):
         )
         self.commit()
 
-    def get_bills(self, approved=True):
-        self.execute(
-            """
+    def get_bills(self, approved=1):
+        # sudah dibayar
+        if approved == 1:
+            self.execute(
+                """
             SELECT
                 CONCAT(U.first_name, ' ', U.last_name) AS 'fullname',
                 R.id,
@@ -38,10 +40,59 @@ class BillModel(Database):
             ON R.id = B.reservation_id
             INNER JOIN users as U
             ON U.id = R.customer_id
+            WHERE B.approve = 1
             ORDER By B.date
             """,
-        )
-        result = self.cursor.fetchall()
+            )
+        elif approved == 0:
+            self.execute(
+                """
+                SELECT
+                    CONCAT(U.first_name, ' ', U.last_name) AS 'fullname',
+                    R.id,
+                    R.room_id,
+                    B.approve,
+                    B.price,
+                    B.date
+                FROM reservations as R
+                INNER JOIN bills as B
+                ON R.id = B.reservation_id
+                INNER JOIN users as U
+                ON U.id = R.customer_id
+                WHERE B.approve = 0
+                ORDER By B.date
+                """,
+            )
+        else:
+            self.execute(
+                """
+                SELECT
+                    CONCAT(U.first_name, ' ', U.last_name) AS 'fullname',
+                    R.id,
+                    R.room_id,
+                    B.approve,
+                    B.price,
+                    B.date
+                FROM reservations as R
+                INNER JOIN bills as B
+                ON R.id = B.reservation_id
+                INNER JOIN users as U
+                ON U.id = R.customer_id
+                ORDER By B.date
+                """,
+            )
+        result = []
+        for res in self.cursor.fetchall():
+            result.append(
+                {
+                    "Nama Lengkap": res["fullname"],
+                    "ID Resi": res["id"],
+                    "Id Kamar": res["room_id"],
+                    "Status": "terbayar" if res["approve"] else "belum dibayar",
+                    "Tagihan": res["price"],
+                    "Tanggal Resi": res["date"],
+                }
+            )
         return result
 
     def get_bill_user(self, _id):
@@ -73,10 +124,15 @@ class BillModel(Database):
                     "Id Kamar": res["room_id"],
                     "Status": "terbayar" if res["approve"] else "belum dibayar",
                     "Tagihan": res["price"],
-                    "Tanggal": res["date"],
+                    "Tanggal Resi": res["date"],
                 }
             )
         return result
+
+    def change_status(self, _id):
+        query = "UPDATE bills SET approve = 1 WHERE reservation_id = %s"
+        self.execute(query, (_id))
+        self.commit()
 
     def drop(self):
         self.execute("DROP TABLE `bills`")
