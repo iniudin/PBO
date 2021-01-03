@@ -76,7 +76,7 @@ class App:
             ["1", "Kamar", "Lihat daftar kamar yang tersedia"],
             ["2", "Check in", "Pesan kamar disini"],
             ["3", "Check out", "Check out kamar disini."],
-            ["4", "Pembayaran", "Bayar tagihan anda disini"],
+            ["4", "Transaksi", "Riwayat transaksi dan tagihan"],
             ["0", "Keluar", "-"],
         )
 

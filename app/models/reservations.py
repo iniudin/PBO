@@ -43,13 +43,13 @@ class ReservationModel(Database):
         )
         self.commit()
 
-    def get_reservation(self, user_id):
+    def get_reservation_user(self, user_id):
         self.execute("SELECT * FROM reservations WHERE customer_id = %s", (user_id))
-        result = self.cursor.fetchone()
+        result = self.cursor.fetchall()
         return result
 
-    def find(self, id):
-        self.execute("SELECT * FROM reservations WHERE id = %s", (id,))
+    def get_reservation(self, _id):
+        self.execute("SELECT * FROM reservations WHERE id = %s", (_id))
         result = self.cursor.fetchone()
         return result
 

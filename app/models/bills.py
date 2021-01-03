@@ -38,8 +38,8 @@ class BillModel(Database):
             ON R.id = B.reservation_id
             INNER JOIN users as U
             ON U.id = R.customer_id
-            WHERE B.approve = 1
-            ORDER By B.date"""
+            ORDER By B.date
+            """,
         )
         result = self.cursor.fetchall()
         return result
@@ -64,7 +64,18 @@ class BillModel(Database):
             """,
             (_id),
         )
-        result = self.cursor.fetchone()
+        result = []
+        for res in self.cursor.fetchall():
+            result.append(
+                {
+                    "Nama Lengkap": res["fullname"],
+                    "ID Resi": res["id"],
+                    "Id Kamar": res["room_id"],
+                    "Status": "terbayar" if res["approve"] else "belum dibayar",
+                    "Tagihan": res["price"],
+                    "Tanggal": res["date"],
+                }
+            )
         return result
 
     def drop(self):
