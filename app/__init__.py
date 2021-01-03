@@ -52,7 +52,7 @@ class App:
             )
         except Exception as err:
             return print(err)
-        print("Berhasil daftar silahkan login.")
+        input("Berhasil daftar, Tekan Enter login.")
         self.login()
 
     def main_menu(self):
