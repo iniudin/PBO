@@ -8,7 +8,7 @@ class RoomsView(RoomModel):
             ["1", "Daftar Kamar"],
             ["2", "Tambah Kamar"],
             ["3", "Cari Kamar"],
-            ["5", "Hapus Kamar"],
+            ["4", "Hapus Kamar"],
             ["0", "Menu utama"],
         )
         print_table("Menu Kamar", ["No", "Deskripsi"], text_menu)
@@ -22,8 +22,6 @@ class RoomsView(RoomModel):
         elif choice == 3:
             self.find_room()
         elif choice == 4:
-            self.update_room()
-        elif choice == 5:
             self.delete_room()
         else:
             print("Perintah tidak ditemukan")
